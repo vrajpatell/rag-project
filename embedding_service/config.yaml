@@ -1,0 +1,8 @@
+embedding:
+  model: all-MiniLM-L6-v2
+  dim: 384
+  chunk_size: 800
+  overlap: 120
+index:
+  backend: pinecone
+  location: pinecone/rag-main

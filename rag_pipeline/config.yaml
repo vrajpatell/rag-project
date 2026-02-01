@@ -1,0 +1,8 @@
+retrieval:
+  top_k: 8
+  rerank: true
+  recency_bias: true
+
+generation:
+  model: "gpt-3.5-turbo"
+  temperature: 0.2
