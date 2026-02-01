@@ -1,6 +1,7 @@
 """FastAPI application exposing the RAG pipeline."""
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 
@@ -11,6 +12,15 @@ from rag_pipeline.generate import synthesize_answer
 
 
 app = FastAPI(title="RAG API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
 retriever = Retriever()
 
 
