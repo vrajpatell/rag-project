@@ -39,7 +39,11 @@ function App() {
     };
 
     try {
-      const res = await axios.post<RAGResponse>('http://localhost:8000/rag', request);
+      // Use the environment variable if available, otherwise default to relative path
+      // In development, Vite will proxy requests or you can set VITE_API_BASE_URL
+      // In production (single container), relative path works best.
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+      const res = await axios.post<RAGResponse>(`${baseUrl}/rag`, request);
       setResponse(res.data);
     } catch (err) {
       console.error(err);
