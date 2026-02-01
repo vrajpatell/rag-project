@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.log
+.env
+data/
+artifacts/
+vector_store/faiss.index
+vector_store/*.index
+state/
+.pytest_cache/
+.coverage
+htmlcov/
+vector_store/manifest.json

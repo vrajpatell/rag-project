@@ -1,0 +1,8 @@
+# Cleaning rules configuration
+deduplicate: true
+language_filter: ["en"]
+remove_html: true
+remove_control_chars: true
+sentence_split: true
+ner: true
+srl: true

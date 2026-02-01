@@ -5,9 +5,9 @@ from pydantic import BaseModel
 from typing import Optional
 
 from .schemas import RAGRequest, RAGResponse
-from ..rag_pipeline.retrieve import Retriever
-from ..rag_pipeline.rerank import rerank_by_recency
-from ..rag_pipeline.generate import synthesize_answer
+from rag_pipeline.retrieve import Retriever
+from rag_pipeline.rerank import rerank_by_recency
+from rag_pipeline.generate import synthesize_answer
 
 
 app = FastAPI(title="RAG API")

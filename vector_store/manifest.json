@@ -1,0 +1,5 @@
+{
+  "backend": "faiss",
+  "location": "vector_store/faiss.index",
+  "doc_count": 1
+}
