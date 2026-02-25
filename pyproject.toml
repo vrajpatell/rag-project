@@ -33,7 +33,7 @@ cli = [
 [tool.black]
 line-length = 88
 
-[tool.ruff]
+[tool.ruff.lint]
 select = ["E", "F", "W"]
 
 

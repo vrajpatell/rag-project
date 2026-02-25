@@ -20,8 +20,18 @@ def finetune(dataset_path: Path, base_model: str, output_dir: Path) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Fine‑tune using LoRA/QLoRA.")
-    parser.add_argument("--dataset", default="artifacts/synthetic/qca_triples.jsonl", help="Path to QCA dataset")
-    parser.add_argument("--base-model", default="meta-llama/Meta-Llama-3-8B", help="Base model identifier")
-    parser.add_argument("--output", default="artifacts/models", help="Output directory for adapters")
+    parser.add_argument(
+        "--dataset",
+        default="artifacts/synthetic/qca_triples.jsonl",
+        help="Path to QCA dataset",
+    )
+    parser.add_argument(
+        "--base-model",
+        default="meta-llama/Meta-Llama-3-8B",
+        help="Base model identifier",
+    )
+    parser.add_argument(
+        "--output", default="artifacts/models", help="Output directory for adapters"
+    )
     args = parser.parse_args()
     finetune(Path(args.dataset), args.base_model, Path(args.output))

@@ -4,7 +4,6 @@
 import argparse
 from pathlib import Path
 import json
-import numpy as np
 
 from .metrics import precision_at_k, mean_reciprocal_rank
 
@@ -31,7 +30,13 @@ def evaluate(results_jsonl: Path, report_path: Path) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Evaluate RAG responses.")
-    parser.add_argument("--results", default="artifacts/eval/rag_results.jsonl", help="Path to results JSONL")
-    parser.add_argument("--report", default="artifacts/eval/report.json", help="Output report JSON")
+    parser.add_argument(
+        "--results",
+        default="artifacts/eval/rag_results.jsonl",
+        help="Path to results JSONL",
+    )
+    parser.add_argument(
+        "--report", default="artifacts/eval/report.json", help="Output report JSON"
+    )
     args = parser.parse_args()
     evaluate(Path(args.results), Path(args.report))

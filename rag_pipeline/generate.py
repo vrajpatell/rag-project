@@ -8,6 +8,7 @@ try:
 except ImportError:
     openai = None
 
+
 def synthesize_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Combine the query and contexts to produce an answer.
 
@@ -19,16 +20,22 @@ def synthesize_answer(query: str, contexts: List[Dict[str, Any]]) -> Dict[str, A
         try:
             client = openai.OpenAI(api_key=api_key)
 
-            context_text = "\n\n".join([f"Document {c['doc_id']}: {c['text']}" for c in contexts])
-            prompt = f"Answer the query based on the context below.\n\nContext:\n{context_text}\n\nQuery: {query}\n\nAnswer:"
+            context_text = "\n\n".join(
+                [f"Document {c['doc_id']}: {c['text']}" for c in contexts]
+            )
+            prompt = (
+                "Answer the query based on the context below.\n\n"
+                f"Context:\n{context_text}\n\n"
+                f"Query: {query}\n\nAnswer:"
+            )
 
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.7
+                temperature=0.7,
             )
             answer = response.choices[0].message.content
-            confidence = 1.0 # Placeholder, as API doesn't return confidence easily
+            confidence = 1.0  # Placeholder, as API doesn't return confidence easily
 
             citations = [f"[{ctx['doc_id']}]" for ctx in contexts]
 
