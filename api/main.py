@@ -2,9 +2,6 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Optional
-
 from .schemas import RAGRequest, RAGResponse
 from rag_pipeline.retrieve import Retriever
 from rag_pipeline.rerank import rerank_by_recency
