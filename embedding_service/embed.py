@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-"""Generate embeddings for cleaned documents and store them in the configured vector index."""
+"""Generate embeddings for cleaned docs and store them in the vector index."""
 
 from pathlib import Path
 import json
-import os
 from typing import List
 import numpy as np
 
@@ -36,7 +35,9 @@ def build_faiss_index(embeddings: np.ndarray, index_path: Path) -> None:
     faiss.write_index(index, str(index_path))  # type: ignore
 
 
-def main(clean_dir: Path, manifest_path: Path, model_name: str = "all-MiniLM-L6-v2") -> None:
+def main(
+    clean_dir: Path, manifest_path: Path, model_name: str = "all-MiniLM-L6-v2"
+) -> None:
     clean_texts = load_documents(clean_dir)
     if not clean_texts:
         print(f"No documents found in {clean_dir}")
@@ -50,14 +51,18 @@ def main(clean_dir: Path, manifest_path: Path, model_name: str = "all-MiniLM-L6-
         raise RuntimeError("faiss is not installed")
     build_faiss_index(emb, faiss_index_path)
 
-    manifest = {"backend": "faiss", "location": str(faiss_index_path), "doc_count": len(clean_texts)}
+    manifest = {
+        "backend": "faiss",
+        "location": str(faiss_index_path),
+        "doc_count": len(clean_texts),
+    }
     manifest_path.write_text(json.dumps(manifest, indent=2))
 
     # Create and save document store for retrieval
     doc_store = {str(i): text for i, text in enumerate(clean_texts)}
     doc_store_path = Path("data/doc_store.json")
     doc_store_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(doc_store_path, "w") as f:
+    with open(doc_store_path, "w", encoding="utf-8") as f:
         json.dump(doc_store, f, indent=2)
     print(f"Index and doc store created with {len(clean_texts)} documents.")
 

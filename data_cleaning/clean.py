@@ -2,7 +2,6 @@
 """Clean raw documents according to rules defined in ruleset.yaml."""
 
 import argparse
-import json
 from pathlib import Path
 from typing import Iterable, Dict
 import yaml
@@ -42,8 +41,16 @@ def main(input_dir: Path, output_dir: Path, rules_file: Path) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Clean raw documents.")
-    parser.add_argument("--input", default="data/raw", help="Directory containing raw text files")
-    parser.add_argument("--output", default="data/clean", help="Directory to write cleaned files")
-    parser.add_argument("--rules", default="data_cleaning/ruleset.yaml", help="YAML file with cleaning rules")
+    parser.add_argument(
+        "--input", default="data/raw", help="Directory containing raw text files"
+    )
+    parser.add_argument(
+        "--output", default="data/clean", help="Directory to write cleaned files"
+    )
+    parser.add_argument(
+        "--rules",
+        default="data_cleaning/ruleset.yaml",
+        help="YAML file with cleaning rules",
+    )
     args = parser.parse_args()
     main(Path(args.input), Path(args.output), Path(args.rules))

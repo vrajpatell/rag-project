@@ -15,7 +15,9 @@ def synthesize(input_jsonl: Path, output_jsonl: Path) -> None:
             triples.append(
                 {
                     "question": data["query"],
-                    "context": "\n".join([ctx["text"] for ctx in data["retrieved_contexts"]]),
+                    "context": "\n".join(
+                        [ctx["text"] for ctx in data["retrieved_contexts"]]
+                    ),
                     "answer": data["synthesized_answer"],
                 }
             )

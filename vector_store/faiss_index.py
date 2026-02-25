@@ -17,6 +17,8 @@ class FaissIndex:
             index_path = Path(index_path)
         self.index = faiss.read_index(str(index_path))  # type: ignore
 
-    def search(self, query_vectors: np.ndarray, top_k: int = 8) -> tuple[np.ndarray, np.ndarray]:
+    def search(
+        self, query_vectors: np.ndarray, top_k: int = 8
+    ) -> tuple[np.ndarray, np.ndarray]:
         """Return distances and indices of top_k nearest neighbours."""
         return self.index.search(query_vectors, top_k)  # type: ignore

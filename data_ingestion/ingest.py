@@ -30,8 +30,12 @@ def ingest(source: str, destination: Path) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Ingest documents into raw data directory.")
+    parser = argparse.ArgumentParser(
+        description="Ingest documents into raw data directory."
+    )
     parser.add_argument("--source", required=True, help="Path or URL to ingest from")
-    parser.add_argument("--output", default="data/raw", help="Output directory for raw documents")
+    parser.add_argument(
+        "--output", default="data/raw", help="Output directory for raw documents"
+    )
     args = parser.parse_args()
     ingest(args.source, Path(args.output))
