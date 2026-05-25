@@ -1,0 +1,5 @@
+{"query": "What is the refund policy?", "expected_answer": "30 days", "relevant_chunk_ids": [], "tenant_id": "default", "collection_id": "default", "tags": ["refund"]}
+{"query": "How long is the warranty on Widget Pro?", "expected_answer": "1 year", "relevant_chunk_ids": [], "tenant_id": "default", "collection_id": "default", "tags": ["product"]}
+{"query": "What is the capital of France?", "expected_answer": "I don't have enough", "relevant_chunk_ids": [], "tenant_id": "default", "collection_id": "default", "tags": ["requires_abstain"]}
+{"query": "How does quantum entanglement power this product?", "expected_answer": "", "relevant_chunk_ids": [], "tenant_id": "default", "collection_id": "default", "tags": ["requires_abstain"]}
+{"query": "How long does standard shipping take?", "expected_answer": "3-5 business days", "relevant_chunk_ids": [], "tenant_id": "default", "collection_id": "default", "tags": ["faq"]}

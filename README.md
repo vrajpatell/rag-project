@@ -1,31 +1,55 @@
 # RAG Project
 
-A modular **Retrieval-Augmented Generation (RAG)** scaffold that covers the full lifecycle:
+Production-minded **Retrieval-Augmented Generation (RAG)** system with hybrid retrieval, hallucination controls, continuous evals, and a versioned API.
 
-- data ingestion,
-- text cleaning/enrichment,
-- embedding + indexing,
-- retrieval/reranking/generation,
-- API serving,
-- evaluation,
-- synthetic dataset generation + fine-tuning stubs,
-- and a minimal React frontend.
+## Quick start (local)
 
-> Current state: this repository is primarily an **MVP skeleton/prototype**. Some modules are fully runnable, while others are placeholders with TODOs.
+```bash
+make install
+make ingest-sample
+make build-index
+make run-api
+```
 
----
+Query:
 
-## 1) What this project is
+```bash
+curl -X POST http://127.0.0.1:8000/api/v1/rag/query \
+  -H "Content-Type: application/json" \
+  -d '{"tenant_id":"default","collection_ids":["default"],"query":"What is the refund policy?","top_k":5}'
+```
 
-This codebase demonstrates how to structure a production-minded RAG system into separable components so each step can be developed independently. The backend is Python/FastAPI, vector retrieval uses FAISS today, and UI is a Vite + React + MUI console.
+Eval:
 
-Core workflow:
+```bash
+make eval
+```
 
-1. Ingest source content to `data/raw`.
-2. Clean/enrich content into `data/clean`.
-3. Embed cleaned docs and build FAISS index + doc store.
-4. Serve `/rag` endpoint that retrieves contexts and synthesizes an answer.
-5. Optionally evaluate outputs and synthesize fine-tuning triples.
+Copy `.env.example` to `.env` and set `OPENAI_API_KEY` for OpenAI generation (otherwise a local grounded stub LLM is used).
+
+## Architecture (v0.2)
+
+New code lives under `rag_project/`:
+
+| Pillar | Modules |
+|--------|---------|
+| Ingest + dedupe | `ingestion/`, `schemas/documents.py` |
+| Hybrid retrieval | `indexing/sparse/bm25_local.py`, `indexing/dense/faiss_ann.py`, `retrieval/hybrid_retriever.py` |
+| Reranking + confidence | `retrieval/reranker.py`, `retrieval/source_confidence.py` |
+| Hallucination controls | `retrieval/answerability.py`, `generation/constrained_generator.py`, `generation/citation_validator.py`, `generation/claim_verifier.py` |
+| API + security | `api/`, `security/` |
+| Evals + observability | `evals/`, `observability/` |
+
+See [docs/production_architecture.md](docs/production_architecture.md), [docs/hallucination_controls.md](docs/hallucination_controls.md), [docs/scaling_10m_docs.md](docs/scaling_10m_docs.md).
+
+Legacy paths (`data_ingestion/`, `rag_pipeline/`, `api/main.py`) remain for backward compatibility. `POST /rag` delegates to the new pipeline.
+
+## Core workflow
+
+1. Ingest documents (`POST /api/v1/ingest` or `make ingest-sample`).
+2. Build hybrid BM25 + FAISS indexes (`make build-index`).
+3. Query with citations (`POST /api/v1/rag/query`).
+4. Run golden-set evals (`make eval`).
 
 ---
 

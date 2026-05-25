@@ -1,4 +1,5 @@
-pydantic>=1.10
+pydantic>=2.0
+pydantic-settings>=2.0
 faiss-cpu>=1.7.4
 chromadb>=0.4.13
 pinecone-client>=2.2.4
@@ -13,3 +14,6 @@ typer>=0.9
 pytest>=7.0
 ruff>=0.1
 black>=23.7
+prometheus-client>=0.19
+beautifulsoup4>=4.12
+httpx>=0.25

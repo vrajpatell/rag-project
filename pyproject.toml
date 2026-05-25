@@ -16,6 +16,10 @@ dependencies = [
 ]
 requires-python = ">=3.9"
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rag_project*"]
+
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",

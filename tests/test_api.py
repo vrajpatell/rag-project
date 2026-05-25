@@ -1,26 +1,22 @@
 from fastapi.testclient import TestClient
-from api.main import app
+from rag_project.api.app import app
 
 client = TestClient(app)
 
-def test_rag_endpoint():
-    # Sending a query
-    response = client.post(
-        "/rag",
-        json={"query": "What is RAG?", "top_k": 2, "use_rerank": False}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    assert "synthesized_answer" in data
-    assert "retrieved_contexts" in data
-    # Note: len might be 2 if dummy index returns checks, or fewer.
-    assert isinstance(data["retrieved_contexts"], list)
 
-def test_rag_endpoint_with_rerank():
-    response = client.post(
-        "/rag",
-        json={"query": "test", "top_k": 2, "use_rerank": True}
+def test_health_live():
+    r = client.get("/health/live")
+    assert r.status_code == 200
+    assert r.json()["status"] == "ok"
+
+
+def test_rag_v1_schema():
+    r = client.post(
+        "/api/v1/rag/query",
+        json={"query": "test query", "allow_abstention": True},
     )
-    assert response.status_code == 200
-    data = response.json()
-    assert "synthesized_answer" in data
+    assert r.status_code == 200
+    data = r.json()
+    assert "answer" in data
+    assert "trace_id" in data
+    assert "confidence_score" in data
